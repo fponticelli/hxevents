@@ -41,10 +41,6 @@ class Notifier {
 	}
 
 	public static function stop() {
-		throw StopPropagation;
+		throw EventException.StopPropagation;
 	}
-}
-
-private enum EventException {
-	StopPropagation;
 }

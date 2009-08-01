@@ -41,6 +41,6 @@ class Dispatcher<T> {
 	}
 
 	public static function stop() {
-		throw StopPropagation;
+		throw EventException.StopPropagation;
 	}
 }
