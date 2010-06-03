@@ -12,6 +12,17 @@ class Dispatcher<T> {
 		handlers.push(h);
 		return h;
 	}
+	
+	public function addOnce(h : T -> Void) : T -> Void {
+		var me = this;
+		var _h = null;
+		_h = function(v : T) {
+			me.remove(_h);
+			h(v);
+		};
+		add(_h);
+		return _h;
+	}
 
 	public function remove(h : T -> Void) : T -> Void {
 		for(i in 0...handlers.length)
@@ -36,8 +47,15 @@ class Dispatcher<T> {
 		}
 	}
 
-	public function has() {
-		return handlers.length > 0;
+	public function has(h : T -> Void) {
+		if(null == h)
+			return handlers.length > 0;
+		else {
+			for (handler in handlers)
+				if (h == handler)
+					return true;
+			return false;
+		}
 	}
 
 	public static function stop() {

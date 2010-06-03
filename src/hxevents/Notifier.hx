@@ -12,6 +12,17 @@ class Notifier {
 		handlers.push(h);
 		return h;
 	}
+	
+	public function addOnce(h : Void -> Void) : Void -> Void {
+		var me = this;
+		var _h = null;
+		_h = function() {
+			me.remove(_h);
+			h();
+		};
+		add(_h);
+		return _h;
+	}
 
 	public function remove(h : Void -> Void) : Void -> Void {
 		for(i in 0...handlers.length)
@@ -36,8 +47,15 @@ class Notifier {
 		}
 	}
 
-	public function has() {
-		return handlers.length > 0;
+	public function has(?h : Void -> Void) {
+		if(null == h)
+			return handlers.length > 0;
+		else {
+			for (handler in handlers)
+				if (h == handler)
+					return true;
+			return false;
+		}
 	}
 
 	public static function stop() {
