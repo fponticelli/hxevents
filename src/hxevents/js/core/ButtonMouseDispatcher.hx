@@ -3,7 +3,7 @@
  * @author Franco Ponticelli
  */
 
-package hxevents.js.core;
+package closer.events.js.core;
 
 class ButtonMouseDispatcher extends BaseMouseDispatcher<IMouseButtonEvent>
 {

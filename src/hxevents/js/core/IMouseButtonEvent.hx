@@ -3,7 +3,7 @@
  * @author Franco Ponticelli
  */
 
-package hxevents.js.core;
+package closer.events.js.core;
 
 interface IMouseButtonEvent implements IMouseEvent
 {

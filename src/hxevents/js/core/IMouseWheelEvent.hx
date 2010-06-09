@@ -3,7 +3,7 @@
  * @author Franco Ponticelli
  */
 
-package hxevents.js.core;
+package closer.events.js.core;
 
 interface IMouseWheelEvent implements IMouseEvent
 {

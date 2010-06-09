@@ -1,4 +1,4 @@
-package hxevents.js.core;
+package closer.events.js.core;
 
 class ResizeEvent implements IResizeEvent
 {

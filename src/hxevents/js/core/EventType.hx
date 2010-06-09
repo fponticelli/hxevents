@@ -1,8 +1,3 @@
-/**
- * ...
- * @author Franco Ponticelli
- */
-
 package closer.events.js.core;
 
 enum EventType
