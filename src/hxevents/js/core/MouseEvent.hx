@@ -3,19 +3,17 @@
  * @author Franco Ponticelli
  */
 
-package closer.events.js.core;
+package hxevents.js.core;
 
 import js.Dom;
-import closer.geom.ReadonlyPoint;
-import closer.geom.EditablePoint;
 
 class MouseEvent implements IMouseEvent
 {
 	public var target(default, null) : HtmlDom;
-	public var global(default, null) : ReadonlyPoint;
-	public var globalPosition(default, null) : EditablePoint;
-	public var local(default, null) : ReadonlyPoint;
-	public var localPosition(default, null) : EditablePoint;
+	public var global(default, null) : IPosition;
+	public var globalPosition(default, null) : Position;
+	public var local(default, null) : IPosition;
+	public var localPosition(default, null) : Position;
 	
 	public var altKey(default, null) : Bool;
 	public var ctrlKey(default, null) : Bool;
@@ -26,9 +24,9 @@ class MouseEvent implements IMouseEvent
 	
 	public function new()
 	{
-		globalPosition = new EditablePoint();
+		globalPosition = new Position();
 		global = globalPosition;
-		localPosition = new EditablePoint();
+		localPosition = new Position();
 		local = localPosition;
 	}
 	
@@ -60,23 +58,23 @@ class MouseEvent implements IMouseEvent
 		return Utils.className(this) + " [" + Utils.targetID(target) + ", lx:" + local.x + ", ly:" + local.y + ", gx:" + global.x + ", gy:" + global.y + "]";
 	}
 	
-	dynamic function populateLocalPosition(position : EditablePoint, event : Event)
+	dynamic function populateLocalPosition(position : Position, event : Event)
 	{
 		untyped {
 			if (event.offsetX != null)
 			{
-				populateLocalPosition = function(position : EditablePoint, event : Event)
+				populateLocalPosition = function(position : Position, event : Event)
 				{
 					position.set(event.offsetX, event.offsetY);
 				}
 			} else if(event.layerX != null) {
-				populateLocalPosition = function(position : EditablePoint, event : Event)
+				populateLocalPosition = function(position : Position, event : Event)
 				{
 					position.set(event.layerX, event.layerY);
 				}
 			} else {
 				// unsupported browser
-				populateLocalPosition = function(position : EditablePoint, event : Event)
+				populateLocalPosition = function(position : Position, event : Event)
 				{
 					// do nothing :(
 				}
@@ -85,17 +83,17 @@ class MouseEvent implements IMouseEvent
 		populateLocalPosition(position, event);
 	}
 	
-	dynamic function populateGlobalPosition(position : EditablePoint, event : Event)
+	dynamic function populateGlobalPosition(position : Position, event : Event)
 	{
 		untyped {
 			if (event.pageX != null)
 			{
-				populateGlobalPosition = function(position : EditablePoint, event : Event)
+				populateGlobalPosition = function(position : Position, event : Event)
 				{
 					position.set(event.pageX, event.pageY);
 				}
 			} else if(event.clientX != null) {
-				populateGlobalPosition = function(position : EditablePoint, event : Event)
+				populateGlobalPosition = function(position : Position, event : Event)
 				{
 					position.set(
 						event.clientX + js.Lib.document.body.scrollLeft + js.Lib.document.documentElement.scrollLeft,
@@ -103,7 +101,7 @@ class MouseEvent implements IMouseEvent
 				}
 			} else {
 				// unsupported browser
-				populateGlobalPosition = function(position : EditablePoint, event : Event)
+				populateGlobalPosition = function(position : Position, event : Event)
 				{
 					// do nothing :(
 				}

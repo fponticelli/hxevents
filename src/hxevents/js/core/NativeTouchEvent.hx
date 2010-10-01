@@ -3,7 +3,7 @@
  * @author Franco Ponticelli
  */
 
-package closer.events.js.core;
+package hxevents.js.core;
 
 typedef NativeTouchEvent = {
 	var touches : Array<NativeTouch>;

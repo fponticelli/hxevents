@@ -3,16 +3,15 @@
  * @author Franco Ponticelli
  */
 
-package closer.events.js.core;
+package hxevents.js.core;
 
 import js.Dom;
-import closer.geom.ReadonlyPoint;
 
 interface ITouch
 {
 	public var target(default, null) : HtmlDom;
-	public var global(default, null) : ReadonlyPoint;
-	public var local(default, null) : ReadonlyPoint;
-	public var screen(default, null) : ReadonlyPoint;
+	public var global(default, null) : IPosition;
+	public var local(default, null) : IPosition;
+	public var screen(default, null) : IPosition;
 	public function setTouch(e : NativeTouch) : ITouch;
 }

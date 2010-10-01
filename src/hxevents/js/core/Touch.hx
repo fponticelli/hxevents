@@ -3,29 +3,27 @@
  * @author Franco Ponticelli
  */
 
-package closer.events.js.core;
+package hxevents.js.core;
 
 import js.Dom;
-import closer.geom.ReadonlyPoint;
-import closer.geom.EditablePoint;
 
 class Touch implements ITouch
 {
 	public var target(default, null) : HtmlDom;
-	public var global(default, null) : ReadonlyPoint;
-	public var globalPosition(default, null) : EditablePoint;
-	public var local(default, null) : ReadonlyPoint;
-	public var localPosition(default, null) : EditablePoint;
-	public var screen(default, null) : ReadonlyPoint;
-	public var screenPosition(default, null) : EditablePoint;
+	public var global(default, null) : IPosition;
+	public var globalPosition(default, null) : Position;
+	public var local(default, null) : IPosition;
+	public var localPosition(default, null) : Position;
+	public var screen(default, null) : IPosition;
+	public var screenPosition(default, null) : Position;
 	
 	public function new()
 	{
-		globalPosition = new EditablePoint();
+		globalPosition = new Position();
 		global = globalPosition;
-		localPosition = new EditablePoint();
+		localPosition = new Position();
 		local = localPosition;
-		screenPosition = new EditablePoint();
+		screenPosition = new Position();
 		screen = screenPosition;
 	}
 	

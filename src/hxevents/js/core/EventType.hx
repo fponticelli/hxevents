@@ -1,4 +1,9 @@
-package closer.events.js.core;
+/**
+ * ...
+ * @author Franco Ponticelli
+ */
+
+package hxevents.js.core;
 
 enum EventType
 {

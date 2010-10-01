@@ -47,7 +47,7 @@ class Dispatcher<T> {
 		}
 	}
 
-	public function has(h : T -> Void) {
+	public function has(?h : T -> Void) {
 		if(null == h)
 			return handlers.length > 0;
 		else {

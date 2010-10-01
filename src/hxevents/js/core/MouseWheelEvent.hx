@@ -3,7 +3,7 @@
  * @author Franco Ponticelli
  */
 
-package closer.events.js.core;
+package hxevents.js.core;
 import js.Dom;
 
 class MouseWheelEvent extends MouseEvent, implements IMouseEvent
@@ -17,14 +17,9 @@ class MouseWheelEvent extends MouseEvent, implements IMouseEvent
 		delta = 0.0;
 		untyped if (event.wheelDelta != null)
 		{
-			delta = event.wheelDelta / 40;
+			delta = event.wheelDelta / 120;
 		} else if (event.detail != null) {
-			delta = -event.detail;
+			delta = -event.detail / 3;
 		}
-	}
-	
-	override function toString()
-	{
-		return Utils.className(this) + " [" + Utils.targetID(target) + ", delta: " + delta + ", lx:" + local.x + ", ly:" + local.y + ", gx:" + global.x + ", gy:" + global.y + "]";
 	}
 }

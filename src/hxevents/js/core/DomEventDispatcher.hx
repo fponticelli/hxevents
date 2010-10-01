@@ -3,10 +3,10 @@
  * @author Franco Ponticelli
  */
 
-package closer.events.js.core;
+package hxevents.js.core;
 
 import js.Dom;
-import closer.events.Dispatcher;
+import hxevents.Dispatcher;
 
 class DomEventDispatcher<T> extends Dispatcher<T>
 {
