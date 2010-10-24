@@ -7,28 +7,22 @@ package hxevents;
 
 class Async
 {
-	var _canceled : Bool;
-	var _handler : Void -> Void;
-	public function new(handler : Void -> Void)
+	var _after : Void -> Void;
+	var _error : Dynamic -> Void;
+	public function new(after : Void -> Void, ?error : Dynamic -> Void)
 	{
-		_canceled = false;
-		_handler = handler;
+		_after = after;
+		_error = error;
 	}
-	
-	public function cancel()
-	{
-		if (_canceled)
-			throw "operation has already been canceled";
-		_canceled = true;
-	}
-	
-	public function isCanceled()
-	{
-		return _canceled;
-	}
-	
+		
 	public function completed()
 	{
-		_handler();
+		_after();
+	}
+	
+	public function error(e : Dynamic)
+	{
+		if (null != _error)
+			_error(e);
 	}
 }

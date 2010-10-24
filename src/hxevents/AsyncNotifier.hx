@@ -76,27 +76,41 @@ class AsyncNotifier
 		return h;
 	}
 	
-	public function dispatch(handler : Void -> Void)
+	public function dispatch(?handler : Void -> Void, ?error : Dynamic -> Void)
 	{
 		var list = handlers.copy();
 		
+		var haserror = false;
 		var size = list.length;
 		var count = 0;
 		
-		var cb = function()
+		var after = function()
 		{
+			if (haserror)
+				return;
 			if (++count == size)
-				handler();
-			else if(count > size)
-				throw "the Async instance has been invoked too many times (expected " + size + " times)";
+			{
+				if(null != handler)
+					handler();
+			} else if (count > size)
+			{
+				var msg = "the Async instance has been invoked too many times (expected " + size + " times)";
+				if(null != error)
+					error(msg);
+				else
+					throw msg;
+			}
 		};
 		
-		var async = new Async(cb);
-		for ( l in list )
-		{
-			if (async.isCanceled())
-				break;
-			l(async);
+		var async = new Async(after, function(e) {
+			haserror = true;
+			error(e);
+		});
+		try {
+			for ( l in list )
+				l(async);
+		} catch (e : Dynamic) {
+			error(e);
 		}
 	}
 }
