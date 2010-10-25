@@ -102,6 +102,12 @@ class AsyncNotifier
 			}
 		};
 		
+		if (0 == size)
+		{
+			after();
+			return;
+		}
+		
 		var async = new Async(after, function(e) {
 			haserror = true;
 			error(e);
