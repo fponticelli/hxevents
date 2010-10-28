@@ -24,5 +24,7 @@ class Async
 	{
 		if (null != _error)
 			_error(e);
+		else
+			throw e;
 	}
 }

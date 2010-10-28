@@ -104,7 +104,7 @@ class AsyncNotifier
 		
 		if (0 == size)
 		{
-			after();
+			handler();
 			return;
 		}
 		
