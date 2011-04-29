@@ -104,7 +104,8 @@ class AsyncDispatcher<T>
 		
 		if (0 == size)
 		{
-			handler();
+			if(null != handler)
+				handler();
 			return;
 		}
 		
