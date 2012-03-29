@@ -8,11 +8,11 @@ class Dispatcher<T> {
 		handlers = new Array();
 	}
 
-	public function add(h : T -> Void) : T -> Void {
+	public dynamic function add(h : T -> Void) : T -> Void {
 		handlers.push(h);
 		return h;
 	}
-	
+
 	public function addOnce(h : T -> Void) : T -> Void {
 		var me = this;
 		var _h = null;
@@ -35,16 +35,29 @@ class Dispatcher<T> {
 		handlers = new Array();
 	}
 
-	public function dispatch(e) {
-		try {
-			// prevents problems with self removing events
-			var list = handlers.copy();
-			for( l in list )
-				l(e);
-			return true;
-		} catch( exc : EventException ) {
-			return false;
+	public function dispatch(e : T) {
+		// prevents problems with self removing events
+		var list = handlers.copy();
+		for( l in list )
+		{
+			if(_stop == true)
+			{
+				_stop = false;
+				break;
+			}
+			l(e);
 		}
+	}
+
+	public function dispatchAndAutomate(e : T)
+	{
+		dispatch(e);
+		handlers = [];
+		add = function(h : T -> Void)
+		{
+			h(e);
+			return h;
+		};
 	}
 
 	public function has(?h : T -> Void) {
@@ -58,7 +71,8 @@ class Dispatcher<T> {
 		}
 	}
 
-	public static function stop() {
-		throw EventException.StopPropagation;
+	var _stop : Bool;
+	public function stop() {
+		_stop = true;
 	}
 }

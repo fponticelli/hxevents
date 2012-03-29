@@ -14,17 +14,15 @@ class Async
 		_after = after;
 		_error = error;
 	}
-		
+
 	public function completed()
 	{
 		_after();
 	}
-	
+
 	public function error(e : Dynamic)
 	{
 		if (null != _error)
 			_error(e);
-		else
-			throw e;
 	}
 }

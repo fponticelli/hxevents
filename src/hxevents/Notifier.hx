@@ -8,11 +8,11 @@ class Notifier {
 		handlers = new Array();
 	}
 
-	public function add(h : Void -> Void) : Void -> Void {
+	dynamic public function add(h : Void -> Void) : Void -> Void {
 		handlers.push(h);
 		return h;
 	}
-	
+
 	public function addOnce(h : Void -> Void) : Void -> Void {
 		var me = this;
 		var _h = null;
@@ -36,15 +36,28 @@ class Notifier {
 	}
 
 	public function dispatch() {
-		try {
-			// prevents problems with self removing events
-			var list = handlers.copy();
-			for( l in list )
-				l();
-			return true;
-		} catch( exc : EventException ) {
-			return false;
+		// prevents problems with self removing events
+		var list = handlers.copy();
+		for( l in list )
+		{
+			if(_stop == true)
+			{
+				_stop = false;
+				break;
+			}
+			l();
 		}
+	}
+
+	public function dispatchAndAutomate()
+	{
+		dispatch();
+		handlers = [];
+		add = function(h : Void -> Void)
+		{
+			h();
+			return h;
+		};
 	}
 
 	public function has(?h : Void -> Void) {
@@ -58,7 +71,8 @@ class Notifier {
 		}
 	}
 
+	var _stop : Bool;
 	public static function stop() {
-		throw EventException.StopPropagation;
+		_stop = true;
 	}
 }
