@@ -72,7 +72,7 @@ class Notifier {
 	}
 
 	var _stop : Bool;
-	public static function stop() {
+	public function stop() {
 		_stop = true;
 	}
 }
